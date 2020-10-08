@@ -56,7 +56,7 @@ class FactorySintaxeBuilder extends AbstractSintaxBuilder
      */
     private function into(string $wrapper, string $placeholder = 'column'): string
     {
-        return str_replace('{{'.$placeholder.'}}', $this->template, $wrapper);
+        return str_replace('{{' . $placeholder . '}}', $this->template, $wrapper);
     }
 
     /**
@@ -86,7 +86,7 @@ class FactorySintaxeBuilder extends AbstractSintaxBuilder
             return $this->addColumn($field);
         }, $schema);
 
-        return implode("\n".str_repeat(' ', 8), $this->removeEmpty($fields));
+        return implode("\n" . str_repeat(' ', 8), $this->removeEmpty($fields));
     }
 
     /**
@@ -108,7 +108,7 @@ class FactorySintaxeBuilder extends AbstractSintaxBuilder
             return '';
         }
 
-        return sprintf("'%s' => \$faker->%s,", $field['name'], $this->getFakerType($field));
+        return sprintf("'%s' => \$this->faker->%s,", $field['name'], $this->getFakerType($field));
     }
 
     /**
@@ -132,7 +132,7 @@ class FactorySintaxeBuilder extends AbstractSintaxBuilder
             $type = 'randomFloat(';
 
             if ($field['arguments']) {
-                $type .= $field['arguments'][1].', 0, '.str_repeat('9', $field['arguments'][0] - $field['arguments'][1]).'.'.str_repeat('9', $field['arguments'][1]);
+                $type .= $field['arguments'][1] . ', 0, ' . str_repeat('9', $field['arguments'][0] - $field['arguments'][1]) . '.' . str_repeat('9', $field['arguments'][1]);
             }
         }
 
@@ -144,6 +144,6 @@ class FactorySintaxeBuilder extends AbstractSintaxBuilder
             $type .= implode(', ', $field['arguments']);
         }
 
-        return $type.')';
+        return $type . ')';
     }
 }
